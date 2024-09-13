@@ -19,6 +19,8 @@
 #include <portaudio.h>
 #include <thread>
 
+#include "pa_win_wasapi.h"
+
 namespace streampunk {
 
 int PaCallback(const void *input, void *output, unsigned long frameCount, 
@@ -281,7 +283,15 @@ void PaContext::setParams(napi_env env, bool isInput,
 
   params.suggestedLatency = isInput ? Pa_GetDeviceInfo(params.device)->defaultLowInputLatency : 
                                       Pa_GetDeviceInfo(params.device)->defaultLowOutputLatency;
-  params.hostApiSpecificStreamInfo = NULL;
+
+  struct PaWasapiStreamInfo wasapiInfo;
+  wasapiInfo.size = sizeof(PaWasapiStreamInfo);
+  wasapiInfo.hostApiType = paWASAPI;
+  wasapiInfo.version = 1;
+  wasapiInfo.flags = (paWinWasapiExclusive|paWinWasapiThreadPriority);
+  wasapiInfo.threadPriority = eThreadPriorityProAudio;
+
+  params.hostApiSpecificStreamInfo = (&wasapiInfo);
 
   sampleRate = (double)options->sampleRate();
 
