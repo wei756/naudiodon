@@ -102,6 +102,8 @@ export interface AudioOptions {
   highwaterMark?: number
   /** Close the stream if an audio error is detected, if set false then just log the error. */
   closeOnError?: boolean
+  /** Using WASAPI Exclusive mode. It only works on windows WASAPI */
+  useExclusiveMode?: boolean
 }
 
 export interface IoStream {

@@ -283,15 +283,24 @@ void PaContext::setParams(napi_env env, bool isInput,
 
   params.suggestedLatency = isInput ? Pa_GetDeviceInfo(params.device)->defaultLowInputLatency : 
                                       Pa_GetDeviceInfo(params.device)->defaultLowOutputLatency;
-
+                                      
+  bool useExclusive = options->useExclusiveMode();
   struct PaWasapiStreamInfo wasapiInfo;
-  wasapiInfo.size = sizeof(PaWasapiStreamInfo);
-  wasapiInfo.hostApiType = paWASAPI;
-  wasapiInfo.version = 1;
-  wasapiInfo.flags = (paWinWasapiExclusive|paWinWasapiThreadPriority);
-  wasapiInfo.threadPriority = eThreadPriorityProAudio;
-
-  params.hostApiSpecificStreamInfo = (&wasapiInfo);
+  if (true == useExclusive) {
+    // bool isWasapi = Pa_GetHostApiInfo(Pa_GetDeviceInfo(params.device)->hostApi)->type == paWASAPI;
+    // if (!isWasapi) {
+    //   napi_throw_error(env, nullptr, "Exclusive mode only supported on WASAPI");
+    //   return;
+    // }
+    wasapiInfo.size = sizeof(PaWasapiStreamInfo);
+    wasapiInfo.hostApiType = paWASAPI;
+    wasapiInfo.version = 1;
+    wasapiInfo.flags = (paWinWasapiExclusive|paWinWasapiThreadPriority);
+    wasapiInfo.threadPriority = eThreadPriorityProAudio;
+    params.hostApiSpecificStreamInfo = (&wasapiInfo);
+  } else {
+    params.hostApiSpecificStreamInfo = NULL;
+  }
 
   sampleRate = (double)options->sampleRate();
 

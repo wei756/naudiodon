@@ -104,7 +104,8 @@ public:
       mSampleBits(1 == mSampleFormat ? 32 : mSampleFormat),
       mMaxQueue(unpackNum(env, tags, "maxQueue", 2)),
       mFramesPerBuffer(unpackNum(env, tags, "framesPerBuffer", 0)),
-      mCloseOnError(unpackBool(env, tags, "closeOnError", true))
+      mCloseOnError(unpackBool(env, tags, "closeOnError", true)),
+      mUseExclusiveMode(unpackBool(env, tags, "useExclusiveMode", true))
   {}
   ~AudioOptions() {}
 
@@ -116,6 +117,7 @@ public:
   uint32_t maxQueue() const  { return mMaxQueue; }
   uint32_t framesPerBuffer() const  { return mFramesPerBuffer; }
   bool closeOnError() const  { return mCloseOnError; }
+  bool useExclusiveMode() const  { return mUseExclusiveMode; }
 
   std::string toString() const  { 
     std::stringstream ss;
@@ -129,7 +131,8 @@ public:
     ss << "bits per sample " << mSampleBits << ", ";
     ss << "max queue " << mMaxQueue << ", ";
     ss << "frames per buffer " << mFramesPerBuffer << ", ";
-    ss << "close on error " << (mCloseOnError ? "true" : "false");
+    ss << "close on error " << (mCloseOnError ? "true" : "false") << ", ";
+    ss << "exclusive mode " << (mUseExclusiveMode ? "true" : "false");
     return ss.str();
   }
 
@@ -142,6 +145,7 @@ private:
   uint32_t mMaxQueue;
   uint32_t mFramesPerBuffer;
   bool mCloseOnError;
+  bool mUseExclusiveMode;
 };
 
 } // namespace streampunk
