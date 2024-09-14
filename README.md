@@ -204,14 +204,14 @@ var aio = new portAudio.AudioIO({
     channelCount: 2,
     sampleFormat: portAudio.SampleFormat16Bit,
     sampleRate: 44100,
-    deviceId: -1 // WASAPI Device
+    deviceId: -1, // WASAPI Device
     useExclusiveMode: true,
   },
   outOptions: {
     channelCount: 2,
     sampleFormat: portAudio.SampleFormat16Bit,
     sampleRate: 44100,
-    deviceId: -1 // WASAPI Device
+    deviceId: -1, // WASAPI Device
     useExclusiveMode: true,
   }
 });
