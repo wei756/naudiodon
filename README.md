@@ -194,6 +194,31 @@ var aio = new portAudio.AudioIO({
 aio.start();
 ```
 
+### Using WASAPI Exclusive mode
+
+```javascript
+var portAudio = require('../index.js');
+
+var aio = new portAudio.AudioIO({
+  inOptions: {
+    channelCount: 2,
+    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleRate: 44100,
+    deviceId: -1 // WASAPI Device
+    useExclusiveMode: true,
+  },
+  outOptions: {
+    channelCount: 2,
+    sampleFormat: portAudio.SampleFormat16Bit,
+    sampleRate: 44100,
+    deviceId: -1 // WASAPI Device
+    useExclusiveMode: true,
+  }
+});
+
+aio.start();
+```
+
 ## Troubleshooting
 
 ### Linux - No Default Device Found
