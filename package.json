@@ -1,5 +1,5 @@
 {
-  "name": "naudiodon",
+  "name": "naudiodon-wasapi-exclusive",
   "version": "2.4.0",
   "description": "Node Stream bindings for PortAudio.",
   "main": "./index.js",
@@ -10,14 +10,15 @@
     "play",
     "record",
     "wav",
-    "raspberry pi"
+    "raspberry pi",
+    "wasapi"
   ],
   "bugs": {
-    "url": "https://github.com/Streampunk/naudiodon/issues"
+    "url": "https://github.com/wei756/naudiodon/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Streampunk/naudiodon.git"
+    "url": "git+https://github.com/wei756/naudiodon.git"
   },
   "dependencies": {
     "bindings": "^1.5.0",
